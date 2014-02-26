@@ -9,6 +9,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -382,10 +383,14 @@ public class SwipeBackLayout extends FrameLayout {
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         mInLayout = true;
-        if (mContentView != null)
-            mContentView.layout(mContentLeft, mContentTop,
-                    mContentLeft + mContentView.getMeasuredWidth(),
-                    mContentTop + mContentView.getMeasuredHeight());
+        try{
+            if (mContentView != null)
+                mContentView.layout(mContentLeft, mContentTop,
+                        mContentLeft + mContentView.getMeasuredWidth(),
+                        mContentTop + mContentView.getMeasuredHeight());
+        }catch(Exception e){
+            Log.e(VIEW_LOG_TAG, "Error occurred during layout content view: "+mContentView.toString(), e);
+        }
         mInLayout = false;
     }
 
